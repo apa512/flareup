@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function Home() {
 	return (
@@ -8,12 +8,6 @@ function Home() {
 					FlareUp 🔥
 				</div>
 				<div className="flex gap-4">
-					<Link
-						to="/sign-in"
-						className="text-gray-600 px-6 py-3 hover:text-gray-800 font-semibold"
-					>
-						Sign in
-					</Link>
 					<button className="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
 						Add to Chrome
 					</button>

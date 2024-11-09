@@ -26,6 +26,8 @@ function SignIn() {
 				throw new Error(data.error || "Failed to sign in");
 			}
 
+			const { token } = await response.json();
+			localStorage.setItem('token', token);
 			navigate("/");
 		} catch (err) {
 			setError(err.message);

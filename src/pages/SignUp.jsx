@@ -12,7 +12,7 @@ function SignUp() {
 		setError("");
 
 		try {
-			const response = await fetch("/api/users", {
+			const createResponse = await fetch("/api/users", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -21,12 +21,27 @@ function SignUp() {
 				}),
 			});
 
-			if (!response.ok) {
-				const data = await response.json();
+			if (!createResponse.ok) {
+				const data = await createResponse.json();
 				throw new Error(data.error || "Failed to create account");
 			}
 
-			navigate("/sign-in");
+			const signInResponse = await fetch("/api/sessions", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					email_address: email,
+					password,
+				}),
+			});
+
+			if (!signInResponse.ok) {
+				throw new Error("Failed to sign in after registration");
+			}
+
+			const { token } = await signInResponse.json();
+			localStorage.setItem('token', token);
+			navigate("/");
 		} catch (err) {
 			setError(err.message);
 		}
