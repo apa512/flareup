@@ -11,8 +11,11 @@ function SignIn() {
 		e.preventDefault();
 		setError("");
 
+		const url = new URL(window.location.href);
+		const isExtension = url.searchParams.get('extension') === 'true';
+
 		try {
-			const response = await fetch("/api/sessions", {
+			const response = await fetch('/api/sessions', {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -28,7 +31,12 @@ function SignIn() {
 
 			const { token } = await response.json();
 			localStorage.setItem('token', token);
-			navigate("/");
+			
+			if (isExtension) {
+				navigate(`/extension-success?token=${token}`);
+			} else {
+				navigate("/");
+			}
 		} catch (err) {
 			setError(err.message);
 		}
