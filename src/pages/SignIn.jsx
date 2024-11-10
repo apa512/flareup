@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import Logo from "../components/Logo";
 function SignIn() {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
@@ -37,11 +37,8 @@ function SignIn() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
 			<nav className="flex justify-between items-center px-8 py-6 bg-white shadow-sm">
-				<Link
-					to="/"
-					className="text-2xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent"
-				>
-					FlareUp 🔥
+				<Link to="/" >
+					<Logo />
 				</Link>
 			</nav>
 

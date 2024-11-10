@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 function Home() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
 			<nav className="flex justify-between items-center px-8 py-6 bg-white shadow-sm">
-				<div className="text-2xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">
-					FlareUp 🔥
-				</div>
+				<Logo />
 				<div className="flex gap-4">
 					<button className="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
 						Add to Chrome
