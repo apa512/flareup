@@ -1,3 +1,28 @@
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Content-Type': 'application/json'
+};
+
+async function handleCors(context) {
+  if (context.request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders
+    });
+  }
+
+  const response = await context.next();
+  const newResponse = new Response(response.body, response);
+  
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    newResponse.headers.set(key, value);
+  });
+
+  return newResponse;
+}
+
 async function authenticateToken(context) {
   const authHeader = context.request.headers.get('Authorization');
   
@@ -8,7 +33,7 @@ async function authenticateToken(context) {
   if (!authHeader.startsWith('Bearer ')) {
     return new Response(
       JSON.stringify({ error: 'Invalid authorization header' }), 
-      { status: 401, headers: { 'Content-Type': 'application/json' }}
+      { status: 401, headers: corsHeaders }
     );
   }
 
@@ -26,7 +51,7 @@ async function authenticateToken(context) {
   if (!results.length) {
     return new Response(
       JSON.stringify({ error: 'Invalid token' }), 
-      { status: 401, headers: { 'Content-Type': 'application/json' }}
+      { status: 401, headers: corsHeaders }
     );
   }
 
@@ -34,4 +59,4 @@ async function authenticateToken(context) {
   return context.next();
 }
 
-export const onRequest = [authenticateToken];
+export const onRequest = [handleCors, authenticateToken];
