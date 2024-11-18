@@ -10,7 +10,6 @@ export async function onRequestGet(context) {
     JSON.stringify(context.data.user),
     { 
       status: 200,
-      headers: corsHeaders
     }
   );
 }
